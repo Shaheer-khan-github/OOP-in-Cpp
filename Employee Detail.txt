@@ -1,0 +1,109 @@
+#include<iostream>
+#include<conio.h>
+#include<string>
+using namespace std;
+class Employee
+{
+protected:
+	string firstName;
+	string lastName;
+	string socialSecurityNumber;
+public:
+	Employee(string F_N, string L_N, string sSN)
+	{
+		setFirstName(F_N);
+		setLastName(L_N);
+		setSocialSecurityNumber(sSN);
+	}
+	void setFirstName( string F_N)
+	{
+		firstName = F_N;
+	}
+	string getFirstName()
+	{
+		return firstName;
+	}
+
+	void setLastName( string L_N)
+	{
+		lastName = L_N;
+	}
+	string getLastName()
+	{
+		return lastName;
+	}
+	
+	void setSocialSecurityNumber(string sSN)
+	{
+		socialSecurityNumber = sSN;
+	}
+	string getSocialSecurityNumber()
+	{
+		return socialSecurityNumber;
+	}
+
+	virtual void earning(float incm) = 0;
+	virtual void print()
+	{
+		cout << "First Name is:" << getFirstName() << endl;
+		cout << "Last Name is:" << getLastName() << endl;
+		cout << "Social Security Number is:" << getSocialSecurityNumber() << endl;
+	}
+};
+class Date:public Employee
+{
+protected:
+	int month;
+	int day;
+	int year;
+public:
+	Date(int m , int d , int y, string F_N, string L_N, string sSN) :Employee(F_N, L_N, sSN)
+	{
+		setDate(m, d, y);
+	}
+	void setDate(int m, int d, int y)
+	{
+		month = m;
+		day = d;
+		year = y;
+	}
+	void Employee::earning(float incm)
+	{
+		if (month == 12)
+		{
+			cout << "Your income is incremented by $1000 so new income is:" << (incm + 1000) << endl;
+		}
+		else
+		{
+			cout << "Not incremented" << endl;
+		}
+	}
+};
+void main()
+{
+	int day, month, year;
+	float income;
+	string firstName, lastName, SocialSecurityNumber;
+	Employee *obj[2];
+	
+	for (int i = 1; i <= 2; i++)
+	{
+		cout << "Enter Birth date of Employee:" << endl;
+		cin >> day >> month >> year;
+		cout << "Enter the first name of Employee" << endl;
+		cin >> firstName;
+		cout << "Enter the last name of Employee" << endl;
+		cin >> lastName;
+		cout << "Enter the Social Security number of Employee" << endl;
+		cin >> SocialSecurityNumber;
+
+		Date d(month, day, year, firstName, lastName, SocialSecurityNumber);
+
+		obj[i] = &d;
+		obj[i]->print();
+		cout << "Enter the income of Employee" << endl;
+		cin >> income;
+		obj[i]->earning(income);
+	}
+	system("pause");
+}
